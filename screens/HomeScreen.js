@@ -30,9 +30,9 @@ const FeaturedItem = ({ item }) => {
 };
 
 const HomeScreen = () => {
-    const [campsites, setCampsites] = useState(CAMPSITES);
-    const [promotions, setPromotions] = useState(PROMOTIONS);
-    const [partners, setPartners] = useState(PARTNERS);
+    const [campsites] = useState(CAMPSITES);
+    const [promotions] = useState(PROMOTIONS);
+    const [partners] = useState(PARTNERS);
 
     const featCampsite = campsites.find((item) => item.featured);
     const featPromotion = promotions.find((item) => item.featured);
