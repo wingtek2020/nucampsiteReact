@@ -1,13 +1,21 @@
-import { useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleFavorite } from '../features/favorites/favoritesSlice';
+import {
+    FlatList, StyleSheet, Text,
+    Button, Modal, View
+} from 'react-native';
 import RenderCampsite from '../features/campsites/RenderCampsite';
+import { useState } from 'react';
+
+import {COMMENTS} from '../shared/comments';
 
 const CampsiteInfoScreen = ({ route }) => {
     const { campsite } = route.params;
-    const comments = useSelector((state) => state.comments);
 
+    const [comments, setComments] = useState(COMMENTS);
     const [favorite, setFavorite] = useState(false);
+
+    const dispatch = useDispatch();
 
     const renderCommentItem = ({ item }) => {
         return (
@@ -23,7 +31,7 @@ const CampsiteInfoScreen = ({ route }) => {
 
     return (
         <FlatList
-            data={comments.commentsArray.filter(
+            data={comments.filter(
                 (comment) => comment.campsiteId === campsite.id
             )}
             renderItem={renderCommentItem}
@@ -60,6 +68,11 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20,
         backgroundColor: '#fff'
+    },
+    cardContainer: {
+        padding: 0,
+        margin: 0,
+        marginBottom: 20
     }
 });
 
