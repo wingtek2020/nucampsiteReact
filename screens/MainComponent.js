@@ -145,7 +145,7 @@ const DirectoryNavigator = () => {
                 name='CampsiteInfo'
                 component={CampsiteInfoScreen}
                 options={({ route }) => ({
-                    title: route.params.campsite.name
+                    title: 'Campsite Information'
                 })}
             />
         </Stack.Navigator>

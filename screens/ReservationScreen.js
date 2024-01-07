@@ -16,6 +16,7 @@ const ReservationScreen = () => {
     const [hikeIn, setHikeIn] = useState(false);
     const [date, setDate] = useState(new Date());
     const [showCalendar, setShowCalendar] = useState(false);
+    
     const [showModal, setShowModal] = useState(false);
 
     const onDateChange = (event, selectedDate) => {
