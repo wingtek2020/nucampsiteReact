@@ -105,7 +105,7 @@ const ReservationNavigator = () => {
                 name='Reservation'
                 component={ReservationScreen}
                 options={({ navigation }) => ({
-                    title: 'Reservation Search',
+                    title: 'Reserve Campsite',
                     headerLeft: () => (
                         <Icon
                             name='tree'
