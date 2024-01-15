@@ -4,6 +4,7 @@ import { CheckBox, Input, Button, Icon } from 'react-native-elements';
 import * as SecureStore from 'expo-secure-store';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as ImagePicker from 'expo-image-picker';
+import { manipulateAsync, SaveFormat } from 'expo-image-manipulator';
 import { baseUrl } from '../shared/baseUrl';
 import logo from '../assets/images/logo.png';
 
@@ -135,9 +136,9 @@ const RegisterTab = () => {
                 console.log('Could not delete user info', error)
             );
         }
-    };
+    };  
 
-    const getImageFromCamera = async () => {
+    const getImageFromCamera = async () => {    
         const cameraPermission =
             await ImagePicker.requestCameraPermissionsAsync();
 
@@ -147,11 +148,23 @@ const RegisterTab = () => {
                 aspect: [1, 1]
             });
             if (capturedImage.assets) {
-                console.log(capturedImage.assets[0]);
-                setImageUrl(capturedImage.assets[0].uri);
+                console.log('before ' + capturedImage.assets[0].width);
+                //setImageUrl(capturedImage.assets[0].uri);
+                await processImage(capturedImage.assets[0].uri);
             }
         }
     };
+
+    const processImage = async (imageUri) => {
+        console.log('before ' + imageUri);
+        const processedImage = await manipulateAsync(
+            imageUri,
+            [{ resize: {width:400 }}],
+            { compress: 1, format: SaveFormat.PNG }
+        ); 
+        console.log('after ' + processedImage.width);
+        setImageUrl(processedImage.uri);
+    }
 
     return (
         <ScrollView>

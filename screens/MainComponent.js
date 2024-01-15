@@ -255,7 +255,7 @@ const Main = () => {
 
         const unsubscribeNetInfo = NetInfo.addEventListener(
             (connectionInfo) => {
-                handleConnectivityChange(connectionInfo);
+                //handleConnectivityChange(connectionInfo);
             }
         );
 
