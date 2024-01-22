@@ -30,7 +30,7 @@ import { fetchPromotions } from '../features/promotions/promotionsSlice';
 import { fetchComments } from '../features/comments/commentsSlice';
 import FavoritesScreen from './FavoritesScreen';
 import LoginScreen from './LoginScreen';
-import { getFocusedRouteNameFromRoute } from '@react-navigation/core';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import NetInfo from '@react-native-community/netinfo';
 
 const Drawer = createDrawerNavigator();
@@ -45,7 +45,7 @@ const HomeNavigator = () => {
     return (
         <Stack.Navigator screenOptions={screenOptions}>
             <Stack.Screen
-                name='Home'
+                name='Home0'
                 component={HomeScreen}
                 options={({ navigation }) => ({
                     title: 'Home',
@@ -159,7 +159,7 @@ const LoginNavigator = () => {
     return (
         <Stack.Navigator screenOptions={screenOptions}>
             <Stack.Screen
-                name='Login'
+                name='Login1'
                 component={LoginScreen}
                 options={({ navigation, route }) => ({
                     headerTitle: getFocusedRouteNameFromRoute(route),
@@ -240,27 +240,30 @@ const Main = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        NetInfo.fetch().then((connectionInfo) => {
-            Platform.OS === 'ios'
-                ? Alert.alert(
-                    'Initial Network Connectivity Type:',
-                    connectionInfo.type
-                )
-                : ToastAndroid.show(
-                    'Initial Network Connectivity Type: ' +
-                    connectionInfo.type,
-                    ToastAndroid.LONG
-                );
-        });
 
+        showNetInfo();
         const unsubscribeNetInfo = NetInfo.addEventListener(
             (connectionInfo) => {
-                //handleConnectivityChange(connectionInfo);
+                handleConnectivityChange(connectionInfo);
             }
         );
 
         return unsubscribeNetInfo;
     }, []);
+
+    const showNetInfo = async () => {
+        const connectionInfo = await NetInfo.fetch();
+        Platform.OS === 'ios'
+            ? Alert.alert(
+                'Initial Network Connectivity Type:',
+                connectionInfo.type
+            )
+            : ToastAndroid.show(
+                'Initial Network Connectivity Type: ' +
+                connectionInfo.type,
+                ToastAndroid.LONG
+            );
+    };
 
     const handleConnectivityChange = (connectionInfo) => {
         let connectionMsg = 'You are now connected to an active network.';
@@ -297,7 +300,7 @@ const Main = () => {
                 drawerStyle={{ backgroundColor: '#CEC8FF' }}
             >
                 <Drawer.Screen
-                    name='Login'
+                    name='Login0'
                     component={LoginNavigator}
                     options={{
                         drawerIcon: ({ color }) => (
@@ -312,10 +315,10 @@ const Main = () => {
                     }}
                 />
                 <Drawer.Screen
-                    name='Home'
+                    name='Home1'
                     component={HomeNavigator}
                     options={{
-                        title: 'Home',
+                        title: 'Home1',
                         drawerIcon: ({ color }) => (
                             <Icon
                                 name='home'
